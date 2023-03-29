@@ -18,6 +18,13 @@ pipeline {
                 sh 'mvn verify -DskipUnitTests'
             }
         }
+        stage("SonarQube Scanning") {
+            steps {
+                withSonarQubeEnv(credentialsId: 'sonar-api') {
+                        sh 'mvn clean package sonar:sonar'
+                }
+            }
+        }
         stage("Build Docker Image") {
             steps {
                 echo 'Building Docker Image'
