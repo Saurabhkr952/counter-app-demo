@@ -36,7 +36,7 @@ pipeline {
                   echo 'deploying the application...'
                   withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                      sh "echo $PASS | docker login -u $USER --password-stdin"
-                     sh "docker push saurabhkr952/counter-demo-app:$IMAGE_NAME"
+                     sh "docker push saurabhkr952/counter-demo-app:$BUILD_NUMBER"
                   }
               }
         }
