@@ -20,10 +20,10 @@ pipeline {
         }
         stage("SonarQube Scanning") {
             steps {
-                withSonarQubeEnv(credentialsId: 'sonar-api' installationName: 'sonarserver') {
+                withSonarQubeEnv(credentialsId: 'sonar-api') {
                         sh 'mvn clean package sonar:sonar'
-                }
-            }
+                  }
+             }
         }
         stage("Build Docker Image") {
             steps {
