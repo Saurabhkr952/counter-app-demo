@@ -1,73 +1,43 @@
-pipeline{
-    
-    agent any 
-    
+pipeline {
+    agent any
+
     stages {
-        
-        stage('Git Checkout'){
-            
-            steps{
-                
-                script{
-                    
-                    git branch: 'main', url: 'https://github.com/vikash-kumar01/mrdevops_javaapplication.git'
-                }
+        stage("Checkout") {
+            steps {
+                git branch: 'main', url: 'https://github.com/your-repo.git'
             }
         }
-        stage('UNIT testing'){
-            
-            steps{
-                
-                script{
-                    
-                    sh 'mvn test'
-                }
+        stage("Build") {
+            steps {
+                sh 'mvn clean install'
             }
         }
-        stage('Integration testing'){
-            
-            steps{
-                
-                script{
-                    
-                    sh 'mvn verify -DskipUnitTests'
-                }
+        stage("Unit & Integration Testing") {
+            steps {
+                sh 'mvn test'
+                sh 'mvn verify -DskipUnitTests'
             }
         }
-        stage('Maven build'){
-            
-            steps{
-                
-                script{
-                    
-                    sh 'mvn clean install'
-                }
+        stage("Build Docker Image") {
+            steps {
+                echo 'Building Docker Image'
+                sh "docker build -t saurabhkr952/my-portfolio:$BUILD_NUMBER ."
             }
         }
-        stage('Static code analysis'){
-            
-            steps{
-                
-                script{
-                    
-                    withSonarQubeEnv(credentialsId: 'sonar-api') {
-                        
-                        sh 'mvn clean package sonar:sonar'
-                    }
-                   }
-                    
-                }
-            }
-            stage('Quality Gate Status'){
-                
-                steps{
-                    
-                    script{
-                        
-                        waitForQualityGate abortPipeline: false, credentialsId: 'sonar-api'
-                    }
-                }
-            }
-        }
-        
-}
+        // stage("Pushing Artifact to Dockerhub") {
+        //     steps {
+        //         echo 'deploying the application...'
+        //         withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+        //             sh "echo $PASS | docker login -u $USER --password-stdin"
+        //             sh "docker push saurabhkr952/my-portfolio:$IMAGE_NAME"
+        //     }
+        // }
+        // stage("Update k8s manifest Repo") {
+        //     steps {
+        //         script {
+        //             gv.update_k8s_manifest()
+        //         }
+        //     }
+        // }
+    }
+}   
