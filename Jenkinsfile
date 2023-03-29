@@ -7,7 +7,7 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/Saurabhkr952/counter-app-demo'
             }
         }
-        stage("Build") {
+        stage("Building Application") {
             steps {
                 sh 'mvn clean install'
             }
@@ -18,7 +18,7 @@ pipeline {
                 sh 'mvn verify -DskipUnitTests'
             }
         }
-        stage("SonarQube Scanning") {
+        stage("Static Code Analysis(SonarQube)") {
             steps {
                 withSonarQubeEnv(installationName: 'sonar-api') {
                         sh 'mvn clean package sonar:sonar'
@@ -31,7 +31,7 @@ pipeline {
                 sh "docker build -t saurabhkr952/counter-demo-app:$BUILD_NUMBER ."
             }
         }
-        stage("deploy to dockerhub") {
+        stage("Pushing Artifact to Dockerhub") {
               steps {
                   echo 'deploying the application...'
                   withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
