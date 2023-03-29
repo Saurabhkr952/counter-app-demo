@@ -28,8 +28,17 @@ pipeline {
         stage("Build Docker Image") {
             steps {
                 echo 'Building Docker Image'
-                sh "docker build -t saurabhkr952/my-portfolio:$BUILD_NUMBER ."
+                sh "docker build -t saurabhkr952/counter-demo-app:$BUILD_NUMBER ."
             }
+        }
+        stage("deploy to dockerhub") {
+              steps {
+                  echo 'deploying the application...'
+                  withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                     sh "echo $PASS | docker login -u $USER --password-stdin"
+                     sh "docker push saurabhkr952/docker-hub-repo:$IMAGE_NAME"
+                  }
+              }
         }
         // stage("Pushing Artifact to Dockerhub") {
         //     steps {
