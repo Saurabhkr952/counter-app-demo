@@ -18,13 +18,13 @@ pipeline {
                 sh 'mvn verify -DskipUnitTests'
             }
         }
-  //      stage("Static Code Analysis(SonarQube)") {
-    //        steps {
-      //          withSonarQubeEnv(installationName: 'sonar-api') {
-        //                sh 'mvn clean package sonar:sonar'
-          //        }
-            // }
-        //}
+        stage("Static Code Analysis(SonarQube)") {
+            steps {
+                withSonarQubeEnv(installationName: 'sonar-api') {
+                        sh 'mvn clean package sonar:sonar'
+                  }
+             }
+        }
         stage("Build Docker Image") {
             steps {
                 echo 'Building Docker Image'
@@ -61,11 +61,11 @@ pipeline {
       script {
         // Send separate Slack notifications for build and quality failures
         if (currentBuild.currentResult == 'FAILURE' && currentBuild.previousBuild.currentResult != 'FAILURE') {
-          slackSend(channel: '##jenkins-notifications', message: 'Build failed!')
+          slackSend(channel: '#general', message: 'Build failed!')
         }
         if (currentBuild.currentResult == 'UNSTABLE' && currentBuild.previousBuild.currentResult != 'UNSTABLE') {
           def qualityResults = sh(returnStdout: true, script: 'mvn sonar:measures')
-          slackSend(channel: '##jenkins-notifications', message: "Quality failed! SonarQube results:\n${qualityResults}")
+          slackSend(channel: '##general', message: "Quality failed! SonarQube results:\n${qualityResults}")
         }
       }
     }
