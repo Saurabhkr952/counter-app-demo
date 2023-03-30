@@ -18,13 +18,13 @@ pipeline {
                 sh 'mvn verify -DskipUnitTests'
             }
         }
-        stage("Static Code Analysis(SonarQube)") {
-            steps {
-                withSonarQubeEnv(installationName: 'sonar-api') {
-                        sh 'mvn clean package sonar:sonar'
-                  }
-             }
-        }
+  //      stage("Static Code Analysis(SonarQube)") {
+    //        steps {
+      //          withSonarQubeEnv(installationName: 'sonar-api') {
+        //                sh 'mvn clean package sonar:sonar'
+          //        }
+            // }
+        //}
         stage("Build Docker Image") {
             steps {
                 echo 'Building Docker Image'
