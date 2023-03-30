@@ -61,11 +61,11 @@ pipeline {
       script {
         // Send separate Slack notifications for build and quality failures
         if (currentBuild.currentResult == 'FAILURE' && currentBuild.previousBuild.currentResult != 'FAILURE') {
-          slackSend(channel: '##jenkins-notifications', message: 'Build failed!')
+          slackSend(channel: '#jenkins-notifications', message: 'Build failed!')
         }
         if (currentBuild.currentResult == 'UNSTABLE' && currentBuild.previousBuild.currentResult != 'UNSTABLE') {
           def qualityResults = sh(returnStdout: true, script: 'mvn sonar:measures')
-          slackSend(channel: '##jenkins-notifications', message: "Quality failed! SonarQube results:\n${qualityResults}")
+          slackSend(channel: '#jenkins-notifications', message: "Quality failed! SonarQube results:\n${qualityResults}")
         }
       }
     }
