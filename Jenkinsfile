@@ -28,7 +28,8 @@ pipeline {
               post {
             failure {
             slackSend(channel: "#general", message: "Build failed in stage ${env.STAGE_NAME}\nMore info at: ${env.BUILD_URL}")
-            }}
+            }
+              }
         }
         stage("Build Docker Image") {
             steps {
@@ -62,10 +63,7 @@ pipeline {
         // }
     }
         post {
-            failure {
-            slackSend(channel: "#general", message: "Build failed in stage ${env.STAGE_NAME}\nMore info at: ${env.BUILD_URL}")
-        }
-       
+          
             success {
             slackSend channel: "#general", message:  "Build Status: ${currentBuild.currentResult} \n${env.JOB_NAME} ${env.BUILD_NUMBER} \nMore info at: ${env.BUILD_URL}" 
             }
