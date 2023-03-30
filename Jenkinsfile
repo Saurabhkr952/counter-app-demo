@@ -16,8 +16,13 @@ pipeline {
         stage("Unit & Integration Testing") {
             steps {
                 sh 'mvn test'
-                sh 'mvn verify -DskipUnitTests'
+                sh 'mv verify -DskipUnitTests'
             }
+              post {
+            failure {
+            slackSend(channel: "#general", message: "Build failed in stage ${env.STAGE_NAME}\nMore info at: ${env.BUILD_URL}")
+            }
+              }
         }
         stage("Static Code Analysis(SonarQube)") {
             steps {
