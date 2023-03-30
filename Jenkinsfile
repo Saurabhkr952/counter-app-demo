@@ -7,16 +7,10 @@ pipeline {
       //        git branch: 'main', url: 'https://github.com/Saurabhkr952/counter-app-demo'
        //    }
       //  }
-        stage("Building Application") {
+        stage("Compiling Application") {
             steps {
-                sh 'mvn clean install'
+                sh 'mv clean install'
             }
-             post {
-            failure {
-            slackSend(channel: "#general", message: "Build failed in stage ${env.STAGE_NAME}\nMore info at: ${env.BUILD_URL}")
-            }
-              }
-            
         }
         stage("Unit & Integration Testing") {
             steps {
@@ -25,7 +19,7 @@ pipeline {
             }
               post {
             failure {
-            slackSend(channel: "#general", message: "Build failed in stage ${env.STAGE_NAME}\nMore info at: ${env.BUILD_URL}")
+            slackSend(channel: "#general", color: '#D70040', message: "Build failed in stage ${env.STAGE_NAME}\nMore info at: ${env.BUILD_URL}")
             }
               }
         }
@@ -37,7 +31,7 @@ pipeline {
       //       }
       //        post {
       //      failure {
-      //      slackSend(channel: "#general", message: "Build failed in stage ${env.STAGE_NAME}\nMore info at: ${env.BUILD_URL}")
+      //      slackSend(channel: "#general", color: '#D70040', message: "Build failed in stage ${env.STAGE_NAME}\nMore info at: ${env.BUILD_URL}")
       //      }
       //        }
       //  }
@@ -46,11 +40,6 @@ pipeline {
                 echo 'Building Docker Image'
                 sh "docker build -t saurabhkr952/counter-demo-app:$BUILD_NUMBER ."
             }
-             post {
-            failure {
-            slackSend(channel: "#general", message: "Build failed in stage ${env.STAGE_NAME}\nMore info at: ${env.BUILD_URL}")
-            }
-              }
         }
         stage("Pushing Artifact to Dockerhub") {
               steps {
@@ -59,11 +48,6 @@ pipeline {
                      sh "echo $PASS | docker login -u $USER --password-stdin"
                      sh "docker push saurabhkr952/counter-demo-app:$BUILD_NUMBER"
                   }
-              }
-             post {
-            failure {
-            slackSend(channel: "#general", message: "Build failed in stage ${env.STAGE_NAME}\nMore info at: ${env.BUILD_URL}")
-            }
               }
         }
         // stage("Pushing Artifact to Dockerhub") {
@@ -84,8 +68,11 @@ pipeline {
     }
         post {
           
-            always {
+            success {
             slackSend channel: "#general", color: '#00ff00', message:  "Build Status: ${currentBuild.currentResult} \n${env.JOB_NAME} ${env.BUILD_NUMBER} \nMore info at: ${env.BUILD_URL}" 
+            }
+            failure {
+            slackSend channel: "#general", color: '#D70040', message:  "Build Status: ${currentBuild.currentResult} \n${env.JOB_NAME} ${env.BUILD_NUMBER} \nMore info at: ${env.BUILD_URL}" 
             }
 }
 }
