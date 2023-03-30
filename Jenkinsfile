@@ -58,7 +58,7 @@ pipeline {
     }
         post {
     always {
-       slackSend channel: "#general", message: "Build Started: ${env.JOB_NAME} ${env.BUILD_NUMBER}"
+       slackSend channel: "#general", message: "Build Started: ${currentBuild.currentResult} ${env.JOB_NAME} ${env.BUILD_NUMBER}"
   }  
 }
 }
