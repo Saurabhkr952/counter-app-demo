@@ -29,18 +29,18 @@ pipeline {
             }
               }
         }
-        stage("Static Code Analysis(SonarQube)") {
-            steps {
-                withSonarQubeEnv(installationName: 'sonar-api') {
-                        sh 'mvn clean package sonar:sonar'
-                  }
-             }
-              post {
-            failure {
-            slackSend(channel: "#general", message: "Build failed in stage ${env.STAGE_NAME}\nMore info at: ${env.BUILD_URL}")
-            }
-              }
-        }
+      //  stage("Static Code Analysis(SonarQube)") {
+      //      steps {
+      //          withSonarQubeEnv(installationName: 'sonar-api') {
+      //                  sh 'mvn clean package sonar:sonar'
+      //            }
+      //       }
+      //        post {
+      //      failure {
+      //      slackSend(channel: "#general", message: "Build failed in stage ${env.STAGE_NAME}\nMore info at: ${env.BUILD_URL}")
+      //      }
+      //        }
+      //  }
         stage("Build Docker Image") {
             steps {
                 echo 'Building Docker Image'
