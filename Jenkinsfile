@@ -2,11 +2,11 @@ pipeline {
     agent any
 
     stages {
-        stage("Checkout") {
-            steps {
-                git branch: 'main', url: 'https://github.com/Saurabhkr952/counter-app-demo'
-            }
-        }
+      //  stage("Checkout") {
+      //     steps {
+      //        git branch: 'main', url: 'https://github.com/Saurabhkr952/counter-app-demo'
+       //    }
+      //  }
         stage("Building Application") {
             steps {
                 sh 'mvn clean install'
