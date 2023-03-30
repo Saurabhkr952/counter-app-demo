@@ -26,7 +26,7 @@ pipeline {
              }
               post {
             failure {
-            slackSend(channel: "#general", color: '#D70040', message: "Build failed in stage ${env.STAGE_NAME}\nMore info at: ${env.BUILD_URL}")
+            slackSend(channel: "#general", color: '#D70040', message: "Build failed in stage ${env.STAGE_NAME}")
             }
               }
         }
