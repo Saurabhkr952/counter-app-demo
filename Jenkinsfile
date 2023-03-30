@@ -57,8 +57,17 @@ pipeline {
         // }
     }
         post {
-    always {
-       slackSend channel: "#general", message: "Build Started: ${currentBuild.currentResult} ${env.JOB_NAME} ${env.BUILD_NUMBER}"
-  }  
+    failure {
+      script {
+        // Send separate Slack notifications for build and quality failures
+        if (currentBuild.currentResult == 'FAILURE' && currentBuild.previousBuild.currentResult != 'FAILURE') {
+          slackSend(channel: '##jenkins-notifications', message: 'Build failed!')
+        }
+        if (currentBuild.currentResult == 'UNSTABLE' && currentBuild.previousBuild.currentResult != 'UNSTABLE') {
+          def qualityResults = sh(returnStdout: true, script: 'mvn sonar:measures')
+          slackSend(channel: '##jenkins-notifications', message: "Quality failed! SonarQube results:\n${qualityResults}")
+        }
+      }
+    }
 }
 }
