@@ -25,10 +25,10 @@ pipeline {
                         sh 'mvn clean package sonar:sonar'
                   }
              }
-            post {
+              post {
             failure {
             slackSend(channel: "#general", message: "Build failed in stage ${env.STAGE_NAME}\nMore info at: ${env.BUILD_URL}")
-        }
+            }}
         }
         stage("Build Docker Image") {
             steps {
