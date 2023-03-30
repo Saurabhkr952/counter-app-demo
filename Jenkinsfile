@@ -58,7 +58,7 @@ pipeline {
     }
         post {
             always {
-                  slackSend channel: "#general", message:  "Build Status: ${currentBuild.currentResult} \n${env.JOB_NAME} ${env.BUILD_NUMBER}"
+                  slackSend channel: "#general", message:  "Build Status: ${currentBuild.currentResult} \n${env.JOB_NAME} ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}"
             }
 }
 }
