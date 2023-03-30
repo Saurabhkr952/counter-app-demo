@@ -57,14 +57,10 @@ pipeline {
         // }
     }
         post {
-            failure {
-      def failedStages = currentBuild.rawBuild.getActions(hudson.model.Action.class).findAll{ it instanceof hudson.model.CauseAction }.collect{ it.causes }.flatten().findAll{ it instanceof hudson.model.FailureCause }
-      def stageName = failedStages[0].getShortDescription()
-      slackSend(channel: '#general', message: "Build failed in '${stageName}' stage! Job name: ${env.JOB_NAME}, build number: ${env.BUILD_NUMBER}, build URL: ${env.BUILD_URL}")
-    }
- //           always {
+       
+            always {
                   
- //                 slackSend channel: "#general", message:  "Build Status: ${currentBuild.currentResult} \n${env.JOB_NAME} ${env.BUILD_NUMBER} \nMore info at: ${env.BUILD_URL}"
- //           }
+                  slackSend channel: "#general", message:  "Build Status: ${currentBuild.currentResult} \n${env.JOB_NAME} ${env.BUILD_NUMBER} \nMore info at: ${env.BUILD_URL} ${env.STAGE_NAME}"
+            }
 }
 }
