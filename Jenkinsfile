@@ -2,14 +2,9 @@ pipeline {
     agent any
 
     stages {
-      //  stage("Checkout") {
-      //     steps {
-      //        git branch: 'main', url: 'https://github.com/Saurabhkr952/counter-app-demo'
-       //    }
-      //  }
         stage("Compiling Application") {
             steps {
-                sh 'mv clean install'
+                sh 'mvn clean install'
             }
         }
         stage("Unit & Integration Testing") {
@@ -23,18 +18,18 @@ pipeline {
             }
               }
         }
-      //  stage("Static Code Analysis(SonarQube)") {
-      //      steps {
-      //          withSonarQubeEnv(installationName: 'sonar-api') {
-      //                  sh 'mvn clean package sonar:sonar'
-      //            }
-      //       }
-      //        post {
-      //      failure {
-      //      slackSend(channel: "#general", color: '#D70040', message: "Build failed in stage ${env.STAGE_NAME}\nMore info at: ${env.BUILD_URL}")
-      //      }
-      //        }
-      //  }
+        stage("Static Code Analysis(SonarQube)") {
+            steps {
+                withSonarQubeEnv(installationName: 'sonar-api') {
+                        sh 'mvn clean package sonar:sonar'
+                  }
+             }
+              post {
+            failure {
+            slackSend(channel: "#general", color: '#D70040', message: "Build failed in stage ${env.STAGE_NAME}\nMore info at: ${env.BUILD_URL}")
+            }
+              }
+        }
         stage("Build Docker Image") {
             steps {
                 echo 'Building Docker Image'
@@ -69,7 +64,7 @@ pipeline {
         post {
           
             success {
-            slackSend channel: "#general", color: '#00ff00', message:  "Build Status: ${currentBuild.currentResult} \n${env.JOB_NAME} ${env.BUILD_NUMBER} \nMore info at: ${env.BUILD_URL}" 
+            slackSend channel: "#general", color: '#7FFFD4', message:  "Build Status: ${currentBuild.currentResult} \n${env.JOB_NAME} ${env.BUILD_NUMBER} \nMore info at: ${env.BUILD_URL}" 
             }
             failure {
             slackSend channel: "#general", color: '#D70040', message:  "Build Status: ${currentBuild.currentResult} \n${env.JOB_NAME} ${env.BUILD_NUMBER} \nMore info at: ${env.BUILD_URL}" 
