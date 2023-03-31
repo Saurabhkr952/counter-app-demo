@@ -48,6 +48,14 @@ pipeline {
                 }
             }
         }
+        
+        stage("checkout mainfest repo (Helm Chart)") {
+            steps {
+                 git credentialsId: 'github-credentials', 
+                 url: 'https://github.com/Saurabhkr952/counter-demo-app-manifest-Helm.git',
+                 branch: 'main'
+            }
+        }
     
         stage("Update k8s manifest Repo") {
             steps {
