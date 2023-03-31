@@ -53,7 +53,7 @@ pipeline {
             steps {
                 echo "pushing updated manifest to repository"
                 withCredentials([usernamePassword(credentialsId: 'github-credentials', passwordVariable: 'password', usernameVariable: 'username')]) {
-                    sh "sed -i 's+saurabhkr952/counter-demo-app:.*+saurabhkr952/counter-demo-app:${BUILD_NUMBER}+g' templates/demo-counter-app.yaml"
+                    sh " sed -i 's+saurabhkr952/counter-demo-app:.*+saurabhkr952/counter-demo-app:$BUILD_NUMBER+g' templates/demo-counter-app.yaml"
                     sh "git add -A"
                     sh "git commit -m 'Updated image tag | Image Version=$BUILD_NUMBER'"
                     sh "git remote -v"
@@ -65,7 +65,7 @@ pipeline {
         post {
             
             success {
-            slackSend channel: "#general", color: '#7FFFD4', message:  "Build Status: ${currentBuild.currentResult} \n${env.JOB_NAME} ${env.BUILD_NUMBER} \nMore info at: ${env.BUILD_URL}" 
+            slackSend channel: "#general", color: '#0096FF', message:  "Build Status: ${currentBuild.currentResult} \n${env.JOB_NAME} ${env.BUILD_NUMBER} \nMore info at: ${env.BUILD_URL}" 
             }
             failure {
             slackSend channel: "#general", color: '#D70040', message:  "Build Status: ${currentBuild.currentResult} \n${env.JOB_NAME} ${env.BUILD_NUMBER} \nMore info at: ${env.BUILD_URL}" 
