@@ -1,3 +1,6 @@
+The issue with this code is that the `post` directives are not properly nested inside the `steps` directives. They should be moved out of the `steps` section and included at the top level next to `stages`. The corrected code is as follows:
+
+```
 pipeline {
     agent any
 
@@ -12,24 +15,24 @@ pipeline {
                 sh 'mvn test'
                 sh 'mvn verify -DskipUnitTests'
             }
-              post {
+         }
+         post {
             failure {
             slackSend(channel: "#general", color: '#D70040', message: "Build failed in stage ${env.STAGE_NAME}")
             }
-              }
-        }
+         }
         stage("Static Code Analysis(SonarQube)") {
             steps {
                 withSonarQubeEnv(installationName: 'sonar-api') {
                         sh 'mvn clean package sonar:sonar'
                   }
              }
-              post {
+         }
+         post {
             failure {
             slackSend(channel: "#general", color: '#D70040', message: "Build failed in stage ${env.STAGE_NAME}")
             }
-              }
-        }
+         }
         stage("Build Docker Image") {
             steps {
                 echo 'Building Docker Image'
@@ -45,8 +48,7 @@ pipeline {
                   }
               }
         }
-      
-         stage("Update k8s manifest Repo") {
+        stage("Update k8s manifest Repo") {
              steps {
                  echo "pushing updated manifest to repository"
                    withCredentials([usernamePassword(credentialsId: 'github-credentials', passwordVariable: 'password', usernameVariable: 'username')]) {
@@ -57,15 +59,15 @@ pipeline {
                       sh "git push https://$password@github.com/Saurabhkr952/counter-demo-app-manifest-Helm.git HEAD:main"
              }
          }
-    }
+       }
         post {
-          
             success {
             slackSend channel: "#general", color: '#7FFFD4', message:  "Build Status: ${currentBuild.currentResult} \n${env.JOB_NAME} ${env.BUILD_NUMBER} \nMore info at: ${env.BUILD_URL}" 
             }
             failure {
             slackSend channel: "#general", color: '#D70040', message:  "Build Status: ${currentBuild.currentResult} \n${env.JOB_NAME} ${env.BUILD_NUMBER} \nMore info at: ${env.BUILD_URL}" 
             }
+        }
+    }
 }
-}
-}
+```
