@@ -51,7 +51,7 @@ pipeline {
                  echo "pushing updated manifest to repository"
                    withCredentials([usernamePassword(credentialsId: 'github-credentials', passwordVariable: 'password', usernameVariable: 'username')]) {
                       sh "sed -i 's+saurabhkr952/counter-demo-app:.*+saurabhkr952/counter-demo-app:${{BUILD_NUMBER}}+g' templates/demo-counter-app.yaml"
-                      sh "git add my-portfolio.yaml"
+                      sh "git add -A"
                       sh "git commit -m 'Updated image tag | Image Version=$BUILD_NUMBER'"
                       sh "git remote -v"
                       sh "git push https://$password@github.com/Saurabhkr952/counter-demo-app-manifest-Helm.git HEAD:main"
