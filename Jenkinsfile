@@ -61,8 +61,9 @@ pipeline {
             }
         }
         }
+    }
         post {
-            {
+            
             success {
             slackSend channel: "#general", color: '#7FFFD4', message:  "Build Status: ${currentBuild.currentResult} \n${env.JOB_NAME} ${env.BUILD_NUMBER} \nMore info at: ${env.BUILD_URL}" 
             }
@@ -71,4 +72,4 @@ pipeline {
             }
         }
     }
-}
+
