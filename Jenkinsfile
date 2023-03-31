@@ -1,6 +1,3 @@
-The issue with this code is that the `post` directives are not properly nested inside the `steps` directives. They should be moved out of the `steps` section and included at the top level next to `stages`. The corrected code is as follows:
-
-```
 pipeline {
     agent any
 
