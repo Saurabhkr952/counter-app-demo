@@ -33,6 +33,12 @@ pipeline {
         }
 
         stage("Static Code Analysis(SonarQube)") {
+             agent {
+                docker {
+                    image 'maven'
+                    reuseNode true
+                }
+            }
             steps {
                 withSonarQubeEnv(installationName: 'sonar-api') {
                     sh 'mvn clean package sonar:sonar'
