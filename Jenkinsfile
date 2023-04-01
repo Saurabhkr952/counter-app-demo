@@ -4,14 +4,14 @@ pipeline {
     stages {
 
         stage("Compiling Application") {
-            {
-        docker {
-            image 'maven'
-            args '-v /var/run/docker.sock:/var/run/docker.sock'
-        }
-    }
-            steps {
-                sh 'mvn clean install'
+           steps {
+                script {
+                    docker {
+                        image 'maven'
+                        args '-v /var/run/docker.sock:/var/run/docker.sock'
+                    }
+                    sh 'mvn clean install'
+                }
             }
         }
 
