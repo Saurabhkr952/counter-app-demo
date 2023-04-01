@@ -1,18 +1,26 @@
 pipeline {
-    agent {
-        docker {
-            image 'maven'
-        }
-    }
+    agent any
 
     stages {
         stage("Compiling Application") {
+            agent {
+                docker {
+                    image 'maven'
+                    reuseNode true
+                }
+            }
             steps {
                 sh 'mvn clean install'
             }
         }
 
         stage("Unit & Integration Testing") {
+            agent {
+                docker {
+                    image 'maven'
+                    reuseNode true
+                }
+            }
             steps {
                 sh 'mvn test'
                 sh 'mvn verify -DskipUnitTests'
@@ -38,15 +46,6 @@ pipeline {
         }
 
         stage("Build Docker Image") {
-            agent {
-                docker {
-                    image 'docker'
-                    args '-v /var/run/docker.sock:/var/run/docker.sock'
-                }
-                  }
-                
-                
-            
             steps {
                 echo 'Building Docker Image'
                 sh "docker build -t saurabhkr952/counter-demo-app:$BUILD_NUMBER ."
