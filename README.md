@@ -29,7 +29,6 @@ If you need help then checkout this video.I've added timestamp : https://youtu.b
 ```
 6. Add the SonarQube server to Jenkins by navigating to "Manage Jenkins" > "System" > "SonarQube Servers" and entering the server name, server URL, and authentication token.
 '
-<img width="1080" alt="1  Fetch sonarqube token" src="https://user-images.githubusercontent.com/32189783/229286144-7fe0d966-d9f4-4176-a4dd-19c32a1ae95b.png">
 
 ## Setting Up DockerHub
 1. Add the DockerHub username and password as secret text in Jenkins credentials.
