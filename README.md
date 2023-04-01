@@ -2,12 +2,14 @@
 # Streamline Your Java Maven Application Deployment with this Ultimate CI/CD Pipeline using Jenkins, Docker, SonarQube, Argo CD, Helm and Kubernetes
 ![ultimate cicd pipeline](https://user-images.githubusercontent.com/32189783/229286588-d165390a-79ca-4c1f-9a45-956d09fa7deb.png)
 
+<img width="1080" src="(https://user-images.githubusercontent.com/32189783/229286105-1e540dc1-769c-4f7d-93ad-9d947eca8478.png)"
+
 
 ## Here are the step-by-step details:
 
 For Installing Jenkins & Configuring Docker as agent: https://github.com/iam-veeramalla/Jenkins-Zero-To-Hero
  
-![jenkins-slave](https://user-images.githubusercontent.com/32189783/229286105-1e540dc1-769c-4f7d-93ad-9d947eca8478.png)
+
 
 ## Install Required Plugins:
 
@@ -39,7 +41,7 @@ If you need help then checkout this video.I've added timestamp : https://youtu.b
 
 2. Set the ID same as {docker-hub-repo} in the Jenkinsfile.
 
-<img width="720" alt="docker hub credential" src="https://user-images.githubusercontent.com/32189783/229286168-0eb76be8-2c85-46f7-9410-93379fc61232.png">
+<img width="480" alt="docker hub credential" src="https://user-images.githubusercontent.com/32189783/229286168-0eb76be8-2c85-46f7-9410-93379fc61232.png">
 
 ## Setting Up GitHub
 1. Generate a Personal Access Token (PAT) from your GitHub account at https://github.com/settings/tokens.
