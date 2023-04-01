@@ -13,11 +13,11 @@ pipeline {
                 sh 'mvn test'
                 sh 'mvn verify -DskipUnitTests'
             }
-//            post {
-//            failure {
-//            slackSend(channel: "#general", color: '#D70040', message: "Build failed in stage ${env.STAGE_NAME}")
-//                }
-//            }
+            post {
+            failure {
+            slackSend(channel: "#general", color: '#D70040', message: "Build failed in stage ${env.STAGE_NAME}")
+                }
+            }
         }
 
         stage("Static Code Analysis(SonarQube)") {
@@ -26,11 +26,11 @@ pipeline {
                     sh 'mvn clean package sonar:sonar'
                 }
             }
-//            post {
-//            failure {
-//            slackSend(channel: "#general", color: '#D70040', message: "Build failed in stage ${env.STAGE_NAME}")
-//                }
-//            }
+            post {
+            failure {
+            slackSend(channel: "#general", color: '#D70040', message: "Build failed in stage ${env.STAGE_NAME}")
+                }
+            }
         }
 
         stage("Build Docker Image") {
