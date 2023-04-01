@@ -1,13 +1,15 @@
 pipeline {
-    agent {
+    agent any
+
+    stages {
+
+        stage("Compiling Application") {
+            {
         docker {
             image 'maven'
             args '-v /var/run/docker.sock:/var/run/docker.sock'
         }
     }
-
-    stages {
-        stage("Compiling Application") {
             steps {
                 sh 'mvn clean install'
             }
