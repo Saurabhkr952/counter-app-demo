@@ -1,5 +1,9 @@
 
-# Jenkins Pipeline for Java based application using Maven, SonarQube, Argo CD, Helm and Kubernetes
+# Streamline Your Java Maven Application Deployment with this Ultimate CI/CD Pipeline using Jenkins, Docker, SonarQube, Argo CD, Helm and Kubernetes
+![ultimate cicd pipeline](https://user-images.githubusercontent.com/32189783/229286588-d165390a-79ca-4c1f-9a45-956d09fa7deb.png)
+
+
+Here are the step-by-step details:
 
 For Installing Jenkins & Configuring Docker as agent: https://github.com/iam-veeramalla/Jenkins-Zero-To-Hero
  
@@ -33,7 +37,7 @@ If you need help then checkout this video.I've added timestamp : https://youtu.b
 ## Setting Up DockerHub
 1. Add the DockerHub username and password as secret text in Jenkins credentials.
 
-2. Set the ID same as {docker-hub-repo} in the Jenkinsfile.'
+2. Set the ID same as {docker-hub-repo} in the Jenkinsfile.
 
 <img width="720" alt="docker hub credential" src="https://user-images.githubusercontent.com/32189783/229286168-0eb76be8-2c85-46f7-9410-93379fc61232.png">
 
@@ -50,6 +54,9 @@ If you need help then checkout this video.I've added timestamp : https://youtu.b
 
 <img width="1080" alt="slack" src="https://user-images.githubusercontent.com/32189783/229286202-99e58e70-0909-416f-8df3-6fcb1578729f.png">
 <img width="1080" alt="22" src="https://user-images.githubusercontent.com/32189783/229286247-9078b9ad-c8ee-466d-96e9-5794d90fdda5.png">
+
+
+<img width="1080" alt="25" src="https://user-images.githubusercontent.com/32189783/229286613-9d2a24a7-7150-4b6d-8081-8e7ffca9133a.png">
 
 
 
