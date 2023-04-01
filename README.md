@@ -2,7 +2,7 @@
 # Streamline Your Java Maven Application Deployment with this Ultimate CI/CD Pipeline using Jenkins, Docker, SonarQube, Argo CD, Helm and Kubernetes
 ![ultimate cicd pipeline](https://user-images.githubusercontent.com/32189783/229286588-d165390a-79ca-4c1f-9a45-956d09fa7deb.png)
 
-<img width="1080" src="(https://user-images.githubusercontent.com/32189783/229286105-1e540dc1-769c-4f7d-93ad-9d947eca8478.png)"
+<img width="1080" src="https://user-images.githubusercontent.com/32189783/229286105-1e540dc1-769c-4f7d-93ad-9d947eca8478.png"
 
 
 ## Here are the step-by-step details:
