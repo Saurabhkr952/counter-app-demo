@@ -6,6 +6,7 @@ pipeline {
             agent {
                 docker {
                     image 'maven'
+                     reuseNode true
                 }
             }
             steps {
@@ -14,6 +15,12 @@ pipeline {
         }
 
         stage("Unit & Integration Testing") {
+            agent {
+                docker {
+                    image 'maven'
+                     reuseNode true
+                }
+            }
             steps {
                 sh 'mvn test'
                 sh 'mvn verify -DskipUnitTests'
