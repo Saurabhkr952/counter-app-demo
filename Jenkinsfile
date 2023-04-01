@@ -1,5 +1,9 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'maven'
+        }
+    }
 
     stages {
         stage("Compiling Application") {
@@ -34,6 +38,9 @@ pipeline {
         }
 
         stage("Build Docker Image") {
+            agent any
+                
+            
             steps {
                 echo 'Building Docker Image'
                 sh "docker build -t saurabhkr952/counter-demo-app:$BUILD_NUMBER ."
