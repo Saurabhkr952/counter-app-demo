@@ -3,7 +3,7 @@
 ![ultimate cicd pipeline](https://user-images.githubusercontent.com/32189783/229286588-d165390a-79ca-4c1f-9a45-956d09fa7deb.png)
 
 
-Here are the step-by-step details:
+## Here are the step-by-step details:
 
 For Installing Jenkins & Configuring Docker as agent: https://github.com/iam-veeramalla/Jenkins-Zero-To-Hero
  
