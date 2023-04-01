@@ -8,7 +8,8 @@
 
 ## MY-PROJECT CI/CD PIPELINE
 
-<img width="1080" alt="25" src="https://user-images.githubusercontent.com/32189783/229287179-858298eb-702c-4c2c-af00-c232d7085677.png">
+<img width="1070" alt="25" src="https://user-images.githubusercontent.com/32189783/229287240-5a86a39e-2d7b-4c01-8680-63f6642ef295.png">
+
 
 
 ## Here are the step-by-step details:
