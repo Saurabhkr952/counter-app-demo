@@ -2,16 +2,14 @@ pipeline {
     agent any
 
     stages {
-
         stage("Compiling Application") {
-           steps {
-                script {
-                    docker {
-                        image 'maven'
-                        args '-v /var/run/docker.sock:/var/run/docker.sock'
-                    }
-                    sh 'mvn clean install'
+            agent {
+                docker {
+                    image 'maven'
                 }
+            }
+            steps {
+                sh 'mvn clean install'
             }
         }
 
@@ -55,20 +53,12 @@ pipeline {
                 }
             }
         }
-        
-        stage("checkout mainfest repo (Helm Chart)") {
-            steps {
-                 git credentialsId: 'github-credentials', 
-                 url: 'https://github.com/Saurabhkr952/counter-demo-app-manifest-Helm.git',
-                 branch: 'main'
-            }
-        }
     
         stage("Update k8s manifest Repo") {
             steps {
                 echo "pushing updated manifest to repository"
                 withCredentials([usernamePassword(credentialsId: 'github-credentials', passwordVariable: 'password', usernameVariable: 'username')]) {
-                    sh " sed -i 's+saurabhkr952/counter-demo-app:.*+saurabhkr952/counter-demo-app:$BUILD_NUMBER+g' templates/demo-counter-app.yaml"
+                    sh "sed -i 's+saurabhkr952/counter-demo-app:.*+saurabhkr952/counter-demo-app:${BUILD_NUMBER}+g' templates/demo-counter-app.yaml"
                     sh "git add -A"
                     sh "git commit -m 'Updated image tag | Image Version=$BUILD_NUMBER'"
                     sh "git remote -v"
@@ -80,11 +70,10 @@ pipeline {
         post {
             
             success {
-            slackSend channel: "#general", color: '#0096FF', message:  "Build Status: ${currentBuild.currentResult} \n${env.JOB_NAME} ${env.BUILD_NUMBER} \nMore info at: ${env.BUILD_URL}" 
+            slackSend channel: "#general", color: '#7FFFD4', message:  "Build Status: ${currentBuild.currentResult} \n${env.JOB_NAME} ${env.BUILD_NUMBER} \nMore info at: ${env.BUILD_URL}" 
             }
             failure {
             slackSend channel: "#general", color: '#D70040', message:  "Build Status: ${currentBuild.currentResult} \n${env.JOB_NAME} ${env.BUILD_NUMBER} \nMore info at: ${env.BUILD_URL}" 
             }
         }
     }
-
